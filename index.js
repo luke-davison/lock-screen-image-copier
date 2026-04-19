@@ -1,3 +1,4 @@
+import { exec } from "child_process";
 import dotenv from "dotenv";
 import * as fs from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
@@ -55,3 +56,16 @@ files.forEach((_file) => {
 Promise.all(promises).then(() => {
   console.log(promises.length, "new images copied");
 });
+
+if (process.argv?.[2] === "save") {
+  exec("git add .", (err) => {
+    if (err) throw err;
+    exec(`git commit -m "Added ${promises.length} more images`, (err) => {
+      if (err) throw err;
+      exec("git push", (err) => {
+        if (err) throw err;
+        console.log("Images successfully commited to git and pushed");
+      });
+    });
+  });
+}
