@@ -8,17 +8,17 @@ This script will copy all lock screen images saved to your computer.
 
 ## Instructions
 
-Step 1: Create a .env file in this repo's directory. It should look something like this (but with "XXXX" replaced with your user):
+_Step 1_: Create a .env file in this repo's directory. It should look something like this (but with "XXXX" replaced with your user):
 
 ```
 IMAGES_DIRECTORY="C:/Users/XXXX/AppData/Local/Packages/Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy/LocalState/Assets/"
 OUTPUT_DIRECTORY=""
 ```
 
-OUTPUT_DIRECTORY is optional. If one isn't provided then the images will be saved to the images folder inside this repo's directory.
+`OUTPUT_DIRECTORY` is optional. If one isn't provided then the images will be saved to the images folder inside this repo's directory.
 
-IMAGES_DIRECTORY must contain the absolute directory of the assets folder.
+`IMAGES_DIRECTORY` must contain the absolute directory of the assets folder.
 
-Step 2: Run `npm start` in a terminal
+_Step 2_: Run `npm start` in a terminal
 
 Images will be split by orientation.
