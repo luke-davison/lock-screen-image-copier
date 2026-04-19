@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import * as fs from "fs";
 import { imageSizeFromFile } from "image-size/fromFile";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const assetsFolder = process.env.IMAGES_DIRECTORY;
 if (!assetsFolder) {
@@ -57,7 +57,7 @@ Promise.all(promises).then(() => {
   console.log(promises.length, "new images copied");
 });
 
-if (process.argv?.[2] === "save") {
+if (promises.length > 0 && process.argv?.[2] === "save") {
   exec("git add .", (err) => {
     if (err) throw err;
     exec(`git commit -m "Added ${promises.length} more images`, (err) => {
