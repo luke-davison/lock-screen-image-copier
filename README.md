@@ -8,7 +8,7 @@ This script will copy all lock screen images saved to your computer.
 
 ## Instructions
 
-### Step 1:
+#### Step 1:
 
 Create a .env file in this repo's directory. It should look something like this (but with "XXXX" replaced with your user):
 
@@ -21,7 +21,7 @@ OUTPUT_DIRECTORY=""
 
 `IMAGES_DIRECTORY` must contain the absolute directory of the assets folder.
 
-###Step 2:
+#### Step 2:
 
 Run `npm start` in a terminal, then check your output directory.
 
