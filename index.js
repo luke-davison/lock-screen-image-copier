@@ -41,13 +41,17 @@ files.forEach((_file) => {
     !portraitFiles.includes(_file + ".jpg") &&
     !landscapeFiles.includes(_file + ".jpg")
   ) {
-    const promise = imageSizeFromFile(file).then((dimensions) => {
-      if (dimensions.width > dimensions.height) {
-        fs.copyFileSync(file, outputFolderLandscape + _file + ".jpg");
-      } else {
-        fs.copyFileSync(file, outputFolderPortrait + _file + ".jpg");
-      }
-    });
+    const promise = imageSizeFromFile(file)
+      .then((dimensions) => {
+        if (dimensions.width > dimensions.height) {
+          fs.copyFileSync(file, outputFolderLandscape + _file + ".jpg");
+        } else {
+          fs.copyFileSync(file, outputFolderPortrait + _file + ".jpg");
+        }
+      })
+      .catch(() => {
+        console.log("Unable to calculate file size of image " + _file);
+      });
 
     promises.push(promise);
   }
