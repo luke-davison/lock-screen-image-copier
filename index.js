@@ -60,6 +60,8 @@ files.forEach((_file) => {
   }
 });
 
+console.log(promises.length, "images found");
+
 Promise.all(promises).then(() => {
   console.log(imagesCopied, "new images copied");
 });
