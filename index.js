@@ -32,6 +32,8 @@ const landscapeFiles = fs.readdirSync(outputFolderLandscape);
 
 const promises = [];
 
+let imagesCopied = 0;
+
 files.forEach((_file) => {
   const file = assetsFolder + _file;
   const stats = fs.statSync(file);
@@ -48,6 +50,7 @@ files.forEach((_file) => {
         } else {
           fs.copyFileSync(file, outputFolderPortrait + _file + ".jpg");
         }
+        imagesCopied += 1;
       })
       .catch(() => {
         console.log("Unable to calculate file size of image " + _file);
@@ -58,13 +61,13 @@ files.forEach((_file) => {
 });
 
 Promise.all(promises).then(() => {
-  console.log(promises.length, "new images copied");
+  console.log(imagesCopied, "new images copied");
 });
 
-if (promises.length > 0 && process.argv?.[2] === "save") {
+if (imagesCopied > 0 && process.argv?.[2] === "save") {
   exec("git add .", (err) => {
     if (err) throw err;
-    exec(`git commit -m "Added ${promises.length} more images`, (err) => {
+    exec(`git commit -m "Added ${imagesCopied} more images`, (err) => {
       if (err) throw err;
       exec("git push", (err) => {
         if (err) throw err;
