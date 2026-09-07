@@ -60,21 +60,23 @@ files.forEach((_file) => {
   }
 });
 
-console.log(promises.length, "images found");
+console.log(promises.length, "new images found");
 
-Promise.all(promises).then(() => {
-  console.log(imagesCopied, "new images copied");
+if (promises.length) {
+  Promise.all(promises).then(() => {
+    console.log(imagesCopied, "images copied");
 
-  if (imagesCopied > 0 && process.argv?.[2] === "save") {
-    exec("git add .", (err) => {
-      if (err) throw err;
-      exec(`git commit -m "Added ${imagesCopied} more images`, (err) => {
+    if (imagesCopied > 0 && process.argv?.[2] === "save") {
+      exec("git add .", (err) => {
         if (err) throw err;
-        exec("git push", (err) => {
+        exec(`git commit -m "Added ${imagesCopied} more images`, (err) => {
           if (err) throw err;
-          console.log("Images successfully commited to git and pushed");
+          exec("git push", (err) => {
+            if (err) throw err;
+            console.log("Images saved and uploaded");
+          });
         });
       });
-    });
-  }
-});
+    }
+  });
+}
