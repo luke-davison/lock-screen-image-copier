@@ -25,10 +25,16 @@ if (!fs.existsSync(outputFolderLandscape)) {
   fs.mkdirSync(outputFolderLandscape);
 }
 
+const outputFolderOther = outputFolder + "/other/";
+if (!fs.existsSync(outputFolderOther)) {
+  fs.mkdirSync(outputFolderOther);
+}
+
 const files = fs.readdirSync(assetsFolder);
 
 const portraitFiles = fs.readdirSync(outputFolderPortrait);
 const landscapeFiles = fs.readdirSync(outputFolderLandscape);
+const otherFiles = fs.readdirSync(outputFolderOther);
 
 const promises = [];
 
@@ -41,7 +47,8 @@ files.forEach((_file) => {
   if (
     sizeInKb > 100 &&
     !portraitFiles.includes(_file + ".jpg") &&
-    !landscapeFiles.includes(_file + ".jpg")
+    !landscapeFiles.includes(_file + ".jpg") &&
+    !otherFiles.includes(_file + ".jpg")
   ) {
     const promise = imageSizeFromFile(file)
       .then((dimensions) => {
@@ -54,6 +61,7 @@ files.forEach((_file) => {
       })
       .catch(() => {
         console.log("Unable to calculate file size of image " + _file);
+        fs.copyFileSync(file, outputFolderOther + _file + ".jpg");
       });
 
     promises.push(promise);
