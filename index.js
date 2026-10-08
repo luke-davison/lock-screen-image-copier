@@ -54,10 +54,10 @@ files.forEach((_file) => {
       .then((dimensions) => {
         if (dimensions.width > dimensions.height) {
           fs.copyFileSync(file, outputFolderLandscape + _file + ".jpg");
+          imagesCopied += 1;
         } else {
           fs.copyFileSync(file, outputFolderPortrait + _file + ".jpg");
         }
-        imagesCopied += 1;
       })
       .catch(() => {
         console.log("Unable to calculate file size of image " + _file);
